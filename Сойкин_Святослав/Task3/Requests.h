@@ -10,6 +10,7 @@ public:
     Requests();
 
     void addRequest();
+    void addRequestFromKeyboard();
     void deleteById(int id);
     list<Request> selectByFlight(const string& flight);
     list<Request> selectByDate(const Date& date);
@@ -17,7 +18,7 @@ public:
     void sortById();
     void sortByDate();
     void sortByDestination();
-    void changeRequest(int id);  // фабричным
+    void changeRequest(int id);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     const list<Request>& getList() const { return list_; }
 

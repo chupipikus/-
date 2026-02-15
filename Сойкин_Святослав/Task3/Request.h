@@ -9,8 +9,8 @@ struct Request : public Object {
     char passenger[31];
     Date date;
 
-    // Manual input with validation (format: first letter upper, rest lower for passenger name)
-    static Request createFromInput(int id);
+    static Request createFactory(int id);  // creates random (for initial data seeding)
+    static Request createFromKeyboard(int id);  // creates request inputted from keyboard with validation
 
     // Binary (fixed-size) serialization helpers
     void writeBinary(ostream& os) const;

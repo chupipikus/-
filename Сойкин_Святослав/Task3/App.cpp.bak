@@ -4,20 +4,20 @@
 App::App() {}
 
 void App::printList(const list<Request>& lst, const string& title) const {
-    cout << "    " << title << "\n"
-        << "    +" << setfill('-') << setw(112) << "-" << "+"
+    cout << "     " << title << "\n"
+        << "     +" << setfill('-') << setw(112) << "-" << "+"
         << setfill(' ') << "\n";
 
     int row = 1;
     for (const auto& r : lst) {
         cout << " " << setfill('0') << setw(3) << row++ << setfill(' ')
             << " | ID: " << setw(2) << r.id
-            << " | Destination: " << setw(19) << r.destination
-            << " | Flight: " << setw(8) << r.flightNum
-            << " | Passenger: " << setw(15) << r.passenger
-            << " | Date: " << r.date.toString() << " |\n";
+            << " | ?????: " << setw(19) << r.destination
+            << " | ?????: " << setw(8) << r.flightNum
+            << " | ????????: " << setw(15) << r.passenger
+            << " | ?????: " << r.date.toString() << " |\n";
     }
-    cout << "    +" << setfill('-') << setw(112) << "-" << "+"
+    cout << "     +" << setfill('-') << setw(112) << "-" << "+"
         << setfill(' ') << "\n";
 }
 
@@ -195,143 +195,142 @@ void App::doSelectByPassenger() {
 
 void App::doSortById() {
     cls();
-    showNavBarMessage(hintColor, "    Sort requests by ID");
+    showNavBarMessage(hintColor, "    ?????????? ???????? ?? ID");
     printList(getRequests(), "Current requests");
 
     requests_.sortById();
-    cout << color(sumColor) << "    Sorted by ID\n" << color(mainColor);
+    cout << color(sumColor) << "    ??????????? ?? ID\n" << color(mainColor);
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Sorted requests");
+    printList(getRequests(), "??????????? ????????");
 }
 
 void App::doSortByDate() {
     cls();
-    showNavBarMessage(hintColor, "    Sort requests by date");
+    showNavBarMessage(hintColor, "    ?????????? ???????? ?? ????");
     printList(getRequests(), "Current requests");
 
     requests_.sortByDate();
-    cout << color(sumColor) << "    Sorted by date\n" << color(mainColor);
+    cout << color(sumColor) << "    ??????????? ?? ????\n" << color(mainColor);
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Sorted requests");
+    printList(getRequests(), "??????????? ????????");
 }
 
 void App::doSortByDestination() {
     cls();
-    showNavBarMessage(hintColor, "    Sort requests by destination");
+    showNavBarMessage(hintColor, "    ?????????? ???????? ?? ???????");
     printList(getRequests(), "Current requests");
 
     requests_.sortByDestination();
-    cout << color(sumColor) << "    Sorted by destination\n" << color(mainColor);
+    cout << color(sumColor) << "    ??????????? ?? ???????\n" << color(mainColor);
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Sorted requests");
+    printList(getRequests(), "??????????? ????????");
 }
 
 void App::doChangeRequest() {
     cls();
-    showNavBarMessage(hintColor, "    Modify request");
+    showNavBarMessage(hintColor, "    ?????????? ????????");
     printList(getRequests(), "Current requests");
 
     if (getRequests().empty()) {
-        cout << color(errColor) << "    No requests\n" << color(mainColor);
+        cout << color(errColor) << "    ?????? ?????\n" << color(mainColor);
         getKey();
         return;
     }
 
-    cout << "\n    Enter request ID to modify: " << color(infoColor);
+    cout << "\n    ??????? ID ???????? ??? ??????????: " << color(infoColor);
     int id;
     if (!(cin >> id)) {
         cin.clear();
         cin.ignore(cin.rdbuf()->in_avail(), '\n');
-        cout << color(mainColor) << color(errColor) << "    Invalid ID input\n" << color(mainColor);
+        cout << color(mainColor) << color(errColor) << "    ???????? ?????? ID\n" << color(mainColor);
         getKey();
         return;
     }
     cin.ignore(cin.rdbuf()->in_avail(), '\n');
-    cout << color(mainColor);
 
-    cout << "\n    Enter new request data:\n";
+    cout << color(mainColor) << "\n    ??????? ????? ?????? ??????:\n";
     try {
         requests_.changeRequest(id);
-        cout << color(sumColor) << "    Request ID " << id << " modified\n" << color(mainColor);
+        cout << color(sumColor) << "    ???????? ID " << id << " ?????? ?????????\n" << color(mainColor);
     } catch (const exception& e) {
-        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+        cout << color(errColor) << "    ??????: " << e.what() << color(mainColor) << "\n";
     }
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Modified requests");
+    printList(getRequests(), "?????????? ????????");
 }
 
 void App::doSaveToBinaryFixed() {
     cls();
-    showNavBarMessage(hintColor, "    Save requests to binary file");
+    showNavBarMessage(hintColor, "    ?????? ???????? ? ???????? ????");
     printList(getRequests(), "Current requests");
 
     try {
         requests_.saveToBinaryFixed(binFile_);
-        cout << color(sumColor) << "    Saved to " << binFile_ << color(mainColor) << "\n";
+        cout << color(sumColor) << "    ????????? ? " << binFile_ << color(mainColor) << "\n";
     } catch (const exception& e) {
-        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+        cout << color(errColor) << "    ??????: " << e.what() << color(mainColor) << "\n";
     }
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Current requests");
+    printList(getRequests(), "?????? ????????");
 }
 
 void App::doLoadFromBinaryFixed() {
     cls();
-    showNavBarMessage(hintColor, "    Load requests from binary file");
+    showNavBarMessage(hintColor, "    ???????? ???????? ?? ???????? ????");
     printList(getRequests(), "Current requests");
 
     try {
         requests_.loadFromBinaryFixed(binFile_);
-        cout << color(sumColor) << "    Loaded from " << binFile_ << color(mainColor) << "\n";
+        cout << color(sumColor) << "    ???????? ?? " << binFile_ << color(mainColor) << "\n";
     } catch (const exception& e) {
-        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+        cout << color(errColor) << "    ??????: " << e.what() << color(mainColor) << "\n";
     }
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Loaded requests");
+    printList(getRequests(), "???????? ????????");
 }
 
 void App::doSwapFirstLastInFile() {
     cls();
-    showNavBarMessage(hintColor, "    Swap first and last records in file");
+    showNavBarMessage(hintColor, "    ???? ??????? ? ????????? ? ????");
     printList(getRequests(), "Current requests");
 
     try {
         requests_.swapFirstLastInFile(binFile_);
-        cout << color(sumColor) << "    First and last records swapped in file\n" << color(mainColor);
+        cout << color(sumColor) << "    ?????? ? ????????? ??????? ??????? ? ?????\n" << color(mainColor);
     } catch (const exception& e) {
-        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+        cout << color(errColor) << "    ??????: " << e.what() << color(mainColor) << "\n";
     }
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Current requests");
+    printList(getRequests(), "?????? ????????");
 }
 
 void App::doSwapEarliestLatestInFile() {
     cls();
-    showNavBarMessage(hintColor, "    Swap earliest/latest date records in file");
+    showNavBarMessage(hintColor, "    ???? ??????? ? ???????? ???");
     printList(getRequests(), "Current requests");
 
     try {
         requests_.swapEarliestLatestInFile(binFile_);
-        cout << color(sumColor) << "    Earliest/latest date records swapped in file\n" << color(mainColor);
+        cout << color(sumColor) << "    ??????? ? ??????????/???? ?????? ? ??? ?????\n" << color(mainColor);
     } catch (const exception& e) {
-        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+        cout << color(errColor) << "    ??????: " << e.what() << color(mainColor) << "\n";
     }
 
-    getKey("\n    Press any key to continue...");
+    getKey("\n    ??????? ????? ??????? ??? ???????...");
     cls();
-    printList(getRequests(), "Current requests");
+    printList(getRequests(), "?????? ????????");
 }

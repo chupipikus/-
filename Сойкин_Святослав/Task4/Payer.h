@@ -14,7 +14,7 @@ private:
     Date date_;
 
 public:
-    static Payer createFactory(int id);
+    static Payer createFromInput(int id);
 
     int getId() const { return id_; }
     string getName() const { return name_; }

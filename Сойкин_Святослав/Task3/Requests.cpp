@@ -4,18 +4,17 @@
 #include <fstream>
 
 Requests::Requests() {
-    // Initialize with empty list
-    // User will add requests via menu
-    nextId_ = 1;
+    for (int i = 0; i < 15; ++i) {
+        list_.push_back(Request::createFactory(nextId_++));
+    }
 }
 
 void Requests::addRequest() {
-    try {
-        Request r = Request::createFromInput(nextId_++);
-        list_.push_back(r);
-    } catch (const exception& e) {
-        throw e;
-    }
+    list_.push_back(Request::createFactory(nextId_++));
+}
+
+void Requests::addRequestFromKeyboard() {
+    list_.push_back(Request::createFromKeyboard(nextId_++));
 }
 
 void Requests::deleteById(int id) {
@@ -61,12 +60,8 @@ void Requests::sortByDestination() {
 void Requests::changeRequest(int id) {
     for (auto& r : list_) {
         if (r.getId() == id) {
-            try {
-                Request newR = Request::createFromInput(id);
-                r = newR;  // copy
-            } catch (const exception& e) {
-                throw e;
-            }
+            Request newR = Request::createFactory(id);
+            r = newR;  // copy
             return;
         }
     }
