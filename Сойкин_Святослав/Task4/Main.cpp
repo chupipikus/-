@@ -5,45 +5,50 @@
 #include "App.h"
 
 int main() try {
-    init(L"Task4: Абоненты ГАТС");
+    init(L"Task4: Payers management");
 
     App app;
 
-    // Commands
     enum Commands : int {
         CMD_ADD = 1001,
         CMD_REMOVE,
-        CMD_FILTER_TARIFF,
-        CMD_FILTER_DISCOUNT,
+        CMD_FILTER_PHONE,
+        CMD_FILTER_NAME,
+        CMD_FILTER_DATE,
         CMD_FILTER_SUM_RANGE,
+        CMD_TOTAL,
         CMD_SORT_ID,
-        CMD_SORT_NAME,
+        CMD_SORT_PHONE,
         CMD_SORT_SUM_DESC,
+        CMD_SORT_TIME_DESC,
         CMD_CHANGE,
         CMD_SAVE,
         CMD_LOAD
     };
 
     vector<MenuItem> items = {
-        MenuItem(CMD_ADD, "Добавить абонента"),
-        MenuItem(CMD_REMOVE, "Удалить по ID"),
-        MenuItem(CMD_FILTER_TARIFF, "Отбор по тарифу"),
-        MenuItem(CMD_FILTER_DISCOUNT, "Отбор по скидке"),
-        MenuItem(CMD_FILTER_SUM_RANGE, "Отбор по сумме в диапазоне"),
-        MenuItem(CMD_SORT_ID, "Сорт по ID"),
-        MenuItem(CMD_SORT_NAME, "Сорт по ФИО"),
-        MenuItem(CMD_SORT_SUM_DESC, "Сорт по сумме убыв."),
-        MenuItem(CMD_CHANGE, "Изменить абонента"),
+        MenuItem(CMD_ADD, "Add payer"),
+        MenuItem(CMD_REMOVE, "Delete by ID"),
+        MenuItem(CMD_FILTER_PHONE, "Filter by phone"),
+        MenuItem(CMD_FILTER_NAME, "Filter by name"),
+        MenuItem(CMD_FILTER_DATE, "Filter by date"),
+        MenuItem(CMD_FILTER_SUM_RANGE, "Filter by sum range"),
+        MenuItem(CMD_TOTAL, "Total payments"),
+        MenuItem(CMD_SORT_ID, "Sort by ID"),
+        MenuItem(CMD_SORT_PHONE, "Sort by phone"),
+        MenuItem(CMD_SORT_SUM_DESC, "Sort by sum (desc)"),
+        MenuItem(CMD_SORT_TIME_DESC, "Sort by time (desc)"),
+        MenuItem(CMD_CHANGE, "Modify payer"),
         MenuItem(CMD_SAVE, "Save CSV"),
         MenuItem(CMD_LOAD, "Load CSV"),
-        MenuItem(Menu::CMD_QUIT, "Выход")
+        MenuItem(Menu::CMD_QUIT, "Exit")
     };
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
     while (true) {
         cls();
-        showNavBarMessage(hintColor, "Task4: Абоненты");
+        showNavBarMessage(hintColor, "Task4: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 
         int cmd = menu.navigate();
         if (cmd == Menu::CMD_QUIT) break;
@@ -62,7 +67,7 @@ int main() try {
         case CMD_LOAD: app.doLoadFromCSV(); break;
         }
 
-        getKey("\nНажмите для продолжения...");
+        getKey("\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...");
     }
 
     cls();
@@ -73,7 +78,7 @@ catch (exception& ex) {
     cout << color(errColor)
         << pos(x, y) << setw(W) << " "
         << pos(x, y + 1) << setw(W) << " "
-        << pos(x, y + 2) << setw(W) << left << "    [Ошибка]"
+        << pos(x, y + 2) << setw(W) << left << "    [пїЅпїЅпїЅпїЅпїЅпїЅ]"
         << pos(x, y + 3) << setw(W) << " "
         << pos(x, y + 4) << setw(W) << ("    "s + ex.what())
         << pos(x, y + 5) << setw(W) << " "

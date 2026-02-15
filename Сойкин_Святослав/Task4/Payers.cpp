@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-#include <stdexcept>  // for runtime_error
+#include <stdexcept>  
 
 void checkInputFormat(istringstream& iss) {
     if (iss.fail()) throw runtime_error("CSV: �������� ������ ����");

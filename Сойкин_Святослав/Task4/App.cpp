@@ -8,8 +8,7 @@ void App::printList(const list<Payer>& lst, const string& title) const {
     const int consoleWidth = static_cast<int>(getConsoleSize().X);
     const int totalWidth = max(40, consoleWidth - 16);
 
-    // fixed column sizes
-    const int colRow = 4;   // index
+    const int colRow = 4;   
     const int colId = 4;
     const int colPhone = 12;
     const int colTariff = 8;
@@ -30,7 +29,6 @@ void App::printList(const list<Payer>& lst, const string& title) const {
 
     cout << "     " << title << "\n"
 
-    // header
          << " "
          << left << setw(colRow - 1) << "#" << " | "
          << left << setw(colId) << "ID" << " | "

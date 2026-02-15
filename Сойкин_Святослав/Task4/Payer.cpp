@@ -18,7 +18,6 @@ Payer Payer::createFromInput(int id) {
     Payer p;
     p.setId(id);
 
-    // Input name
     cout << "    Enter name and initials: " << color(infoColor);
     string name;
     getline(cin, name);
@@ -31,7 +30,6 @@ Payer Payer::createFromInput(int id) {
     }
     p.setName(name);
 
-    // Input phone number (format 062-xxx where 121 <= xxx <= 333)
     cout << "    Enter phone number (format 062-xxx, 121<=xxx<=333): " << color(infoColor);
     string phone;
     getline(cin, phone);
@@ -40,7 +38,6 @@ Payer Payer::createFromInput(int id) {
         throw exception("Invalid phone number");
     }
     
-    // Validate phone format
     if (phone.size() != 8 || phone.substr(0, 4) != "062-") {
         throw exception("Invalid phone format (expected 062-xxx)");
     }
@@ -50,7 +47,6 @@ Payer Payer::createFromInput(int id) {
     }
     p.setPhone(phone);
 
-    // Input tariff (cost per minute)
     cout << "    Enter tariff (cost per minute): " << color(infoColor);
     double tariff;
     if (!(cin >> tariff)) {
@@ -66,7 +62,6 @@ Payer Payer::createFromInput(int id) {
     }
     p.setTariff(tariff);
 
-    // Input discount (0-100%)
     cout << "    Enter discount (0-100%): " << color(infoColor);
     int discount;
     if (!(cin >> discount)) {
@@ -82,7 +77,6 @@ Payer Payer::createFromInput(int id) {
     }
     p.setDiscount(discount);
 
-    // Input time in minutes
     cout << "    Enter time in minutes: " << color(infoColor);
     int timeMin;
     if (!(cin >> timeMin)) {
@@ -98,7 +92,6 @@ Payer Payer::createFromInput(int id) {
     }
     p.setTimeMin(timeMin);
 
-    // Input date
     cout << "    Enter date (day month year): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
