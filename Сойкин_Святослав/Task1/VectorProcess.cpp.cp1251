@@ -1,0 +1,15 @@
+#include "pch.h"
+#include "Utils.h"
+#include "VectorProcess.h"
+
+VectorProcess::VectorProcess():VectorProcess(initialize(getRand(23, 30))) {
+
+} // VectorProcess::VectorProcess
+
+
+VectorProcess::VectorProcess(const vector<float> data) {
+	data_ = data;
+} // VectorProcess::VectorProcess
+
+
+// 

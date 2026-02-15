@@ -42,7 +42,7 @@ void App::loadFromBinary() {
     v_.swap(tmp);
 }
 
-// ����� ���� ��� ����� ��� ������
+// ????? ???? ??? ????? ??? ??????
 void App::displayVector(const string& title, const vector<float>& data, int itemsPerRow, bool useColor, float a, float b, int precision) {
     cout << "    " << color(resColor) << title << " (n=" << data.size() << ")\n" << color(mainColor);
     if (data.empty()) {
