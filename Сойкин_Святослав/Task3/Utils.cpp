@@ -253,7 +253,6 @@ COORD getConsoleSize() {
 	return csbi.dwSize;
 } // getConsoleSize
 
-// Convert UTF-8 to CP1251 and print to cout
 void printCp1251(const string& utf8) {
 	if (utf8.empty()) return;
 	int wlen = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);

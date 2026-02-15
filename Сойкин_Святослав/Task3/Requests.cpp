@@ -61,7 +61,6 @@ void Requests::changeRequest(int id) {
     for (auto& r : list_) {
         if (r.getId() == id) {
             Request newR = Request::createFactory(id);
-            r = newR;  // copy
             return;
         }
     }
@@ -98,21 +97,17 @@ void Requests::swapFirstLastInFile(const string& fname) {
     size_t recSize = Request::binarySize();
     if (fileSize < 2 * recSize) throw exception("������������ ������� � �����");
 
-    // read first
     f.seekg(0);
     Request first;
     if (!Request::readBinary(f, first)) throw exception("������ ������ ������ �� �����");
 
-    // read last
     f.seekg(static_cast<streamoff>(fileSize - recSize));
     Request last;
     if (!Request::readBinary(f, last)) throw exception("������ ������ ������ �� �����");
 
-    // write last to first position
     f.seekp(0);
     last.writeBinary(f);
 
-    // write first to last position
     f.seekp(static_cast<streamoff>(fileSize - recSize));
     first.writeBinary(f);
 }

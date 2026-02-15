@@ -9,10 +9,9 @@ struct Request : public Object {
     char passenger[31];
     Date date;
 
-    static Request createFactory(int id);  // creates random (for initial data seeding)
-    static Request createFromKeyboard(int id);  // creates request inputted from keyboard with validation
+    static Request createFactory(int id);  
+    static Request createFromKeyboard(int id);  
 
-    // Binary (fixed-size) serialization helpers
     void writeBinary(ostream& os) const;
     static bool readBinary(istream& is, Request& out);
     static size_t binarySize() { return sizeof(int) + 31 + 16 + 31 + 3 * sizeof(short); }
@@ -23,5 +22,5 @@ struct Request : public Object {
     string getPassenger() const { return string(passenger); }
     Date getDate() const { return date; }
 
-    string toString() const override;  // const
+    string toString() const override;
 };

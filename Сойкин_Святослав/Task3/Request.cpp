@@ -20,7 +20,6 @@ Request Request::createFromKeyboard(int id) {
     Request r;
     r.id = id;
 
-    // Input destination
     cout << "    Enter destination: " << color(infoColor);
     string dest;
     getline(cin, dest);
@@ -34,7 +33,6 @@ Request Request::createFromKeyboard(int id) {
     strncpy(r.destination, dest.c_str(), 30);
     r.destination[30] = '\0';
 
-    // Input flight number
     cout << "    Enter flight number (format PO-xxxxK): " << color(infoColor);
     string flight;
     getline(cin, flight);
@@ -48,7 +46,6 @@ Request Request::createFromKeyboard(int id) {
     strncpy(r.flightNum, flight.c_str(), 15);
     r.flightNum[15] = '\0';
 
-    // Input passenger name
     cout << "    Enter passenger name: " << color(infoColor);
     string pass;
     getline(cin, pass);
@@ -62,7 +59,6 @@ Request Request::createFromKeyboard(int id) {
     strncpy(r.passenger, pass.c_str(), 30);
     r.passenger[30] = '\0';
 
-    // Input date
     cout << "    Enter date (day month year): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
@@ -111,7 +107,6 @@ bool Request::readBinary(istream& is, Request& out) {
     if (!is.read(reinterpret_cast<char*>(&month), sizeof(month))) return false;
     if (!is.read(reinterpret_cast<char*>(&year), sizeof(year))) return false;
 
-    // Ensure null-termination (in case source used full-length strings)
     out.destination[30] = '\0';
     out.flightNum[15] = '\0';
     out.passenger[30] = '\0';

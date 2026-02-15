@@ -9,7 +9,6 @@ int main() {
 
     App app;
 
-    // Commands
     enum Commands : int {
         CMD_ADD = 1001,
         CMD_REMOVE,

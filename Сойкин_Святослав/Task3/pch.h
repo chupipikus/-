@@ -18,7 +18,7 @@
 #include <numeric>
 
 #include <locale> // чтоб не мучаться с кодировками
-#include <map>    // for freq dict
+#include <map>    
 #include <list>
 
 using namespace std;
