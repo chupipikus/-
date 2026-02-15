@@ -5,6 +5,9 @@ class App {
     vector<float> v_;
     string binFile_;
 
+    // Display vector elements with formatting
+    void displayVector(const string& title, const vector<float>& data, int itemsPerRow = 8);
+
     // steps of Task 1 implemented as separate functions
     void step_countNegative();
     void step_countOutsideInterval(float a, float b);
