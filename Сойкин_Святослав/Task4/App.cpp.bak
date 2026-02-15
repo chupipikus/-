@@ -1,0 +1,222 @@
+#include "App.h"
+#include "Utils.h"
+
+App::App() {}
+
+void App::printList(const list<Payer>& lst, const string& title) const {
+
+    const int consoleWidth = static_cast<int>(getConsoleSize().X);
+    const int totalWidth = max(40, consoleWidth - 16);
+
+    // fixed column sizes
+    const int colRow = 4;   // index
+    const int colId = 4;
+    const int colPhone = 12;
+    const int colTariff = 8;
+    const int colDisc = 4;
+    const int colMin = 5;
+    const int colDate = 10;
+    const int colSum = 10;
+
+    int fixedCols = colRow + colId + colPhone + colTariff + colDisc + colMin + colDate + colSum + 9; // separators
+    int nameCol = max(6, totalWidth - fixedCols);
+
+    auto fit = [](const string& s, int maxLen) {
+        if (maxLen <= 0) return string();
+        if ((int)s.size() <= maxLen) return s;
+        if (maxLen <= 3) return string(maxLen, '.');
+        return s.substr(0, maxLen - 3) + "...";
+    };
+
+    cout << "     " << title << "\n"
+
+    // header
+         << " "
+         << left << setw(colRow - 1) << "#" << " | "
+         << left << setw(colId) << "ID" << " | "
+         << left << setw(nameCol) << "���" << " | "
+         << left << setw(colPhone) << "�������" << " | "
+         << right << setw(colTariff) << "Tariff" << " | "
+         << right << setw(colDisc) << "Disc" << " | "
+         << right << setw(colMin) << "Min" << " | "
+         << left << setw(colDate) << "Date" << " | "
+         << right << setw(colSum) << "Sum" << "\n"
+
+         << string(totalWidth + 16, '-') << "\n";
+
+    int row = 1;
+    for (const auto& p : lst) {
+        cout << " "
+             << left << setw(colRow - 1) << row++ << " | "
+             << left << setw(colId) << p.getId() << " | "
+             << left << setw(nameCol) << fit(p.getName(), nameCol) << " | "
+             << left << setw(colPhone) << fit(p.getPhone(), colPhone) << " | ";
+
+        ostringstream ssum;
+        ssum << fixed << setprecision(2) << p.calculateSum();
+
+        cout << right << setw(colTariff) << fixed << setprecision(2) << p.getTariff() << " | "
+             << right << setw(colDisc) << p.getDiscount() << " | "
+             << right << setw(colMin) << p.getTimeMin() << " | "
+             << left << setw(colDate) << p.getDate().toString() << " | "
+             << right << setw(colSum) << ssum.str() << "\n";
+    }
+
+    cout << string(totalWidth + 16, '-') << "\n";
+}
+
+void App::doAddPayer() {
+    cls();
+    showNavBarMessage(hintColor, "    Add new payer");
+    printList(payers_.getList(), "Current payers");
+
+    cout << "\n    Enter new payer data:\n";
+    try {
+        payers_.addPayerFromKeyboard();
+        cout << color(sumColor) << "    Payer added successfully\n" << color(mainColor);
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
+
+    getKey("\n    Press any key to continue...");
+    cls();
+    printList(payers_.getList(), "Updated payers list");
+}
+
+void App::doDeleteById() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    if (payers_.getList().empty()) throw exception("������ ����");
+
+    auto it = payers_.getList().begin();
+    advance(it, getRand(0, payers_.getList().size() - 1));
+    int id = it->getId();
+    payers_.deleteById(id);
+    cout << color(errColor) << "����� ���������� ID: " << id << color(mainColor) << "\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doSelectByTariff() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    if (payers_.getList().empty()) throw exception("������ ����");
+
+    auto it = payers_.getList().begin();
+    advance(it, getRand(0, payers_.getList().size() - 1));
+    double tariff = it->getTariff();
+    cout << "��������� �����: " << tariff << "\n";
+    auto res = payers_.selectByTariff(tariff);
+    printList(res, "����������� �� ������");
+}
+
+void App::doSelectByDiscount() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    if (payers_.getList().empty()) throw exception("������ ����");
+
+    auto it = payers_.getList().begin();
+    advance(it, getRand(0, payers_.getList().size() - 1));
+    int discount = it->getDiscount();
+    cout << "��������� ������: " << discount << "\n";
+    auto res = payers_.selectByDiscount(discount);
+    printList(res, "����������� �� ������");
+}
+
+void App::doSelectBySumRange() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    if (payers_.getList().empty()) throw exception("������ ����");
+
+    double low = getRand(10.0, 100.0);
+    double high = low + getRand(50.0, 200.0);
+    cout << "�������� ����: " << low << " - " << high << "\n";
+    auto res = payers_.selectBySumRange(low, high);
+    printList(res, "����������� �� ����� (� ���������)");
+}
+
+void App::doSortById() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    payers_.sortById();
+    cout << "������������� �� ID\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doSortByName() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    payers_.sortByName();
+    cout << "������������� �� �����\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doSortBySumDescending() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    payers_.sortBySumDescending();
+    cout << "������������� �� ����� (��������)\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doChangePayer() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    if (payers_.getList().empty()) throw exception("������ ����");
+
+    auto it = payers_.getList().begin();
+    advance(it, getRand(0, payers_.getList().size() - 1));
+    int id = it->getId();
+    payers_.changePayer(id);
+    cout << "������� ���������� ID: " << id << "\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doSaveToCSV() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    payers_.saveToCSV(csvFile_);
+    cout << "������\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}
+
+void App::doLoadFromCSV() {
+    cls();
+    printList(payers_.getList(), "������ ������������");
+    getKey("\n������� ����� ������� ��� �����������");
+
+    payers_.loadFromCSV(csvFile_);
+    cout << "������\n";
+
+    cls();
+    printList(payers_.getList(), "������ ������������");
+}

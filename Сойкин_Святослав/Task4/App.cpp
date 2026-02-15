@@ -34,8 +34,8 @@ void App::printList(const list<Payer>& lst, const string& title) const {
          << " "
          << left << setw(colRow - 1) << "#" << " | "
          << left << setw(colId) << "ID" << " | "
-         << left << setw(nameCol) << "Имя" << " | "
-         << left << setw(colPhone) << "Телефон" << " | "
+         << left << setw(nameCol) << "Name" << " | "
+         << left << setw(colPhone) << "Phone" << " | "
          << right << setw(colTariff) << "Tariff" << " | "
          << right << setw(colDisc) << "Disc" << " | "
          << right << setw(colMin) << "Min" << " | "
@@ -67,150 +67,341 @@ void App::printList(const list<Payer>& lst, const string& title) const {
 
 void App::doAddPayer() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Add new payer");
+    printList(payers_.getList(), "Current payers");
 
-    payers_.addPayer();
-    cout << "Готово\n";
+    cout << "\n    Enter new payer data:\n";
+    try {
+        payers_.addPayerFromKeyboard();
+        cout << color(sumColor) << "    Payer added successfully\n" << color(mainColor);
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
 
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Updated payers list");
 }
 
 void App::doDeleteById() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Delete payer by ID");
+    printList(payers_.getList(), "Current payers");
 
-    if (payers_.getList().empty()) throw exception("Список пуст");
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
 
-    auto it = payers_.getList().begin();
-    advance(it, getRand(0, payers_.getList().size() - 1));
-    int id = it->getId();
-    payers_.deleteById(id);
-    cout << color(errColor) << "Удалён плательщик ID: " << id << color(mainColor) << "\n";
+    cout << "\n    Enter payer ID to delete: " << color(infoColor);
+    int id;
+    if (!(cin >> id)) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(mainColor) << color(errColor) << "    Invalid ID input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+    cin.ignore(cin.rdbuf()->in_avail(), '\n');
+    cout << color(mainColor);
 
+    try {
+        payers_.deleteById(id);
+        cout << color(sumColor) << "    Payer ID " << id << " deleted\n" << color(mainColor);
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
+
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Updated payers list");
 }
 
-void App::doSelectByTariff() {
+void App::doSelectByPhone() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Select payers by phone number");
+    printList(payers_.getList(), "Current payers");
 
-    if (payers_.getList().empty()) throw exception("Список пуст");
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
 
-    auto it = payers_.getList().begin();
-    advance(it, getRand(0, payers_.getList().size() - 1));
-    double tariff = it->getTariff();
-    cout << "Выбранный тариф: " << tariff << "\n";
-    auto res = payers_.selectByTariff(tariff);
-    printList(res, "Плательщики по тарифу");
+    cout << "\n    Enter phone number (format 062-xxx): " << color(infoColor);
+    string phone;
+    getline(cin, phone);
+    cout << color(mainColor);
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(errColor) << "    Invalid input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    if (phone.empty()) {
+        cout << color(errColor) << "    Phone number cannot be empty\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    auto res = payers_.selectByPhone(phone);
+    if (res.empty()) {
+        cout << "    No payers found for phone: " << phone << "\n";
+    } else {
+        printList(res, "Payers for phone " + phone);
+    }
+    getKey();
 }
 
-void App::doSelectByDiscount() {
+void App::doSelectByName() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Select payers by name");
+    printList(payers_.getList(), "Current payers");
 
-    if (payers_.getList().empty()) throw exception("Список пуст");
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
 
-    auto it = payers_.getList().begin();
-    advance(it, getRand(0, payers_.getList().size() - 1));
-    int discount = it->getDiscount();
-    cout << "Выбранная скидка: " << discount << "\n";
-    auto res = payers_.selectByDiscount(discount);
-    printList(res, "Плательщики по скидке");
+    cout << "\n    Enter name/initials: " << color(infoColor);
+    string name;
+    getline(cin, name);
+    cout << color(mainColor);
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(errColor) << "    Invalid input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    if (name.empty()) {
+        cout << color(errColor) << "    Name cannot be empty\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    auto res = payers_.selectByName(name);
+    if (res.empty()) {
+        cout << "    No payers found for name: " << name << "\n";
+    } else {
+        printList(res, "Payers for name " + name);
+    }
+    getKey();
+}
+
+void App::doSelectByDate() {
+    cls();
+    showNavBarMessage(hintColor, "    Select payers by payment date");
+    printList(payers_.getList(), "Current payers");
+
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    cout << "\n    Enter date (day month year): " << color(infoColor);
+    short day, month, year;
+    if (!(cin >> day >> month >> year)) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(mainColor) << color(errColor) << "    Invalid date input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+    cin.ignore(cin.rdbuf()->in_avail(), '\n');
+    cout << color(mainColor);
+
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        cout << color(errColor) << "    Invalid date range: day=[1-31], month=[1-12], year=[1900-2100]\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
+    try {
+        Date date(day, month, year);
+        auto res = payers_.selectByDate(date);
+        if (res.empty()) {
+            cout << "    No payers found for date: " << date.toString() << "\n";
+        } else {
+            printList(res, "Payers for date " + date.toString());
+        }
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
+    getKey();
 }
 
 void App::doSelectBySumRange() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Select payers by sum range");
+    printList(payers_.getList(), "Current payers");
 
-    if (payers_.getList().empty()) throw exception("Список пуст");
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
 
-    double low = getRand(10.0, 100.0);
-    double high = low + getRand(50.0, 200.0);
-    cout << "Диапазон сумм: " << low << " - " << high << "\n";
+    cout << "\n    Enter sum range (low high): " << color(infoColor);
+    double low, high;
+    if (!(cin >> low >> high)) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(mainColor) << color(errColor) << "    Invalid input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+    cin.ignore(cin.rdbuf()->in_avail(), '\n');
+    cout << color(mainColor);
+
+    if (low < 0 || high < 0 || low > high) {
+        cout << color(errColor) << "    Invalid range\n" << color(mainColor);
+        getKey();
+        return;
+    }
+
     auto res = payers_.selectBySumRange(low, high);
-    printList(res, "Плательщики по сумме (в диапазоне)");
+    if (res.empty()) {
+        cout << "    No payers found in range " << low << " - " << high << "\n";
+    } else {
+        printList(res, "Payers in sum range " + to_string(static_cast<int>(low)) + "-" + to_string(static_cast<int>(high)));
+    }
+    getKey();
+}
+
+void App::doTotalPayments() {
+    cls();
+    showNavBarMessage(hintColor, "    Total payments");
+    printList(payers_.getList(), "Current payers");
+
+    double total = payers_.totalPayments();
+    cout << "\n    Total payments: " << color(sumColor) << fixed << setprecision(2) << total << color(mainColor) << "\n";
+
+    getKey("\n    Press any key to continue...");
 }
 
 void App::doSortById() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Sort payers by ID");
+    printList(payers_.getList(), "Current payers");
 
     payers_.sortById();
-    cout << "Отсортировано по ID\n";
+    cout << color(sumColor) << "    Sorted by ID\n" << color(mainColor);
 
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Sorted payers");
 }
 
-void App::doSortByName() {
+void App::doSortByPhone() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Sort payers by phone");
+    printList(payers_.getList(), "Current payers");
 
-    payers_.sortByName();
-    cout << "Отсортировано по имени\n";
+    payers_.sortByPhone();
+    cout << color(sumColor) << "    Sorted by phone\n" << color(mainColor);
 
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Sorted payers");
 }
 
 void App::doSortBySumDescending() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Sort payers by sum (descending)");
+    printList(payers_.getList(), "Current payers");
 
     payers_.sortBySumDescending();
-    cout << "Отсортировано по сумме (убывание)\n";
+    cout << color(sumColor) << "    Sorted by sum (descending)\n" << color(mainColor);
 
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Sorted payers");
+}
+
+void App::doSortByTimeDescending() {
+    cls();
+    showNavBarMessage(hintColor, "    Sort payers by time (descending)");
+    printList(payers_.getList(), "Current payers");
+
+    payers_.sortByTimeDescending();
+    cout << color(sumColor) << "    Sorted by time (descending)\n" << color(mainColor);
+
+    getKey("\n    Press any key to continue...");
+    cls();
+    printList(payers_.getList(), "Sorted payers");
 }
 
 void App::doChangePayer() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Modify payer");
+    printList(payers_.getList(), "Current payers");
 
-    if (payers_.getList().empty()) throw exception("Список пуст");
+    if (payers_.getList().empty()) {
+        cout << color(errColor) << "    No payers\n" << color(mainColor);
+        getKey();
+        return;
+    }
 
-    auto it = payers_.getList().begin();
-    advance(it, getRand(0, payers_.getList().size() - 1));
-    int id = it->getId();
-    payers_.changePayer(id);
-    cout << "Изменён плательщик ID: " << id << "\n";
+    cout << "\n    Enter payer ID to modify: " << color(infoColor);
+    int id;
+    if (!(cin >> id)) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        cout << color(mainColor) << color(errColor) << "    Invalid ID input\n" << color(mainColor);
+        getKey();
+        return;
+    }
+    cin.ignore(cin.rdbuf()->in_avail(), '\n');
+    cout << color(mainColor);
 
+    cout << "\n    Generating new data (factory method):\n";
+    try {
+        payers_.changePayer(id);
+        cout << color(sumColor) << "    Payer ID " << id << " modified\n" << color(mainColor);
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
+
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Modified payers");
 }
 
 void App::doSaveToCSV() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Save payers to CSV file");
+    printList(payers_.getList(), "Current payers");
 
-    payers_.saveToCSV(csvFile_);
-    cout << "Готово\n";
+    try {
+        payers_.saveToCSV(csvFile_);
+        cout << color(sumColor) << "    Saved to " << csvFile_ << color(mainColor) << "\n";
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
 
-    cls();
-    printList(payers_.getList(), "Список плательщиков");
+    getKey("\n    Press any key to continue...");
 }
 
 void App::doLoadFromCSV() {
     cls();
-    printList(payers_.getList(), "Список плательщиков");
-    getKey("\nНажмите любую клавишу для продолжения");
+    showNavBarMessage(hintColor, "    Load payers from CSV file");
+    printList(payers_.getList(), "Current payers");
 
-    payers_.loadFromCSV(csvFile_);
-    cout << "Готово\n";
+    try {
+        payers_.loadFromCSV(csvFile_);
+        cout << color(sumColor) << "    Loaded from " << csvFile_ << color(mainColor) << "\n";
+    } catch (const exception& e) {
+        cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";
+    }
 
+    getKey("\n    Press any key to continue...");
     cls();
-    printList(payers_.getList(), "Список плательщиков");
+    printList(payers_.getList(), "Loaded payers");
 }

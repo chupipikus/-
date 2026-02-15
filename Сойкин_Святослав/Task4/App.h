@@ -14,12 +14,15 @@ public:
 
     void doAddPayer();
     void doDeleteById();
-    void doSelectByTariff();
-    void doSelectByDiscount();
+    void doSelectByPhone();
+    void doSelectByName();
+    void doSelectByDate();
     void doSelectBySumRange();
+    void doTotalPayments();
     void doSortById();
-    void doSortByName();
+    void doSortByPhone();
     void doSortBySumDescending();
+    void doSortByTimeDescending();
     void doChangePayer();
     void doSaveToCSV();
     void doLoadFromCSV();
