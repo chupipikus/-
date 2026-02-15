@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Colors.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="FKeys.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Palette.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="TextProcessor.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>App</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="App.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="TextProcessor.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="App">
+      <UniqueIdentifier>{cbb087c8-d850-4624-a2f0-9ace7a72f4b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{ff5c9aaf-33f9-41ef-9764-ec93f3323daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure">
+      <UniqueIdentifier>{cc4b03a3-7d80-4a1e-8fe0-d92c0bddc113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Menu">
+      <UniqueIdentifier>{98cf8da5-609f-4ba9-a416-9e194fad4414}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="App">
+      <UniqueIdentifier>{484b667c-f7a1-4f85-b296-99d9b952a465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f9d7965d-08ca-4574-bda1-f96f5727dd97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure">
+      <UniqueIdentifier>{e76d38c4-0ac8-457d-aded-4f2410cc0581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Colors">
+      <UniqueIdentifier>{011f2ee0-9615-49b8-b651-507fff59db37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Menu">
+      <UniqueIdentifier>{b98e9c85-cf6d-4230-8354-b9a2127233fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Menu.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Infrastructure\Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Palette.h">
+      <Filter>Infrastructure\Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="FKeys.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Ticket.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightSeeder.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="TicketFactory.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Ticket.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="TicketFactory.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

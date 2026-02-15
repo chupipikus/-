@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="App">
+      <UniqueIdentifier>{b84606af-42f7-4c44-9c70-848ca1013ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure">
+      <UniqueIdentifier>{872bc534-ae19-4507-9728-2095dcd4b699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{bcb18f10-27e6-406f-854b-bd57dbf4239f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Colors">
+      <UniqueIdentifier>{a504eddd-1fd6-4cf8-a4b2-a907ceb5e279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Menu">
+      <UniqueIdentifier>{8f5798f9-3660-4c6c-bef5-b97ffef9b1dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Date.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Infrastructure</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Payer.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Payers.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Date.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="FKeys.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Infrastructure\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Palette.h">
+      <Filter>Infrastructure\Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Infrastructure\Colors</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Infrastructure</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Payer.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Payers.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
