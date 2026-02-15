@@ -1,26 +1,97 @@
 #include "Request.h"
 #include "Utils.h"
+#include <cctype>
 
-Request Request::createFactory(int id) {
+// Helper to validate flight format PO-xxxxK
+static bool isValidFlightNum(const string& flight) {
+    if (flight.length() != 8) return false;
+    if (flight[0] != 'P' || flight[1] != 'O' || flight[2] != '-') return false;
+    if (flight[7] != 'K') return false;
+    for (int i = 3; i < 7; ++i) {
+        if (!isdigit(flight[i])) return false;
+    }
+    return true;
+}
+
+// Manual input with validation
+Request Request::createFromInput(int id) {
     Request r;
     r.id = id;
-    string dest = "Пункт назначения " + to_string(getRand(1, 15));
-    string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-    string pass = "Иванов " + to_string(getRand(1, 30)) + " П.О.";
-    Date d;
-    d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
-    strncpy(r.destination, dest.c_str(), 30); r.destination[30] = '\0';
-    strncpy(r.flightNum, flight.c_str(), 15); r.flightNum[15] = '\0';
-    strncpy(r.passenger, pass.c_str(), 30); r.passenger[30] = '\0';
-    r.date = d;
+    // Input destination
+    cout << "    пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << color(infoColor);
+    string dest;
+    getline(cin, dest);
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        throw exception("Error reading destination");
+    }
+    if (dest.empty() || dest.length() > 30) {
+        throw exception("Destination empty or too long (max 30 chars)");
+    }
+    strncpy(r.destination, dest.c_str(), 30);
+    r.destination[30] = '\0';
+
+    // Input flight number (format: PO-xxxxK)
+    cout << color(mainColor) << "    пїЅпїЅпїЅпїЅ: " << color(infoColor);
+    string flight;
+    getline(cin, flight);
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        throw exception("Error reading flight number");
+    }
+    if (!isValidFlightNum(flight)) {
+        throw exception("Invalid flight format. Expected: PO-xxxxK (e.g., PO-2212K)");
+    }
+    strncpy(r.flightNum, flight.c_str(), 15);
+    r.flightNum[15] = '\0';
+
+    // Input passenger (format: FirstName I.I.)
+    cout << color(mainColor) << "    пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << color(infoColor);
+    string pass;
+    getline(cin, pass);
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        throw exception("Error reading passenger name");
+    }
+    if (pass.empty() || pass.length() > 30) {
+        throw exception("Passenger name empty or too long (max 30 chars)");
+    }
+    strncpy(r.passenger, pass.c_str(), 30);
+    r.passenger[30] = '\0';
+
+    // Input date (day month year)
+    cout << color(mainColor) << "    пїЅпїЅпїЅпїЅ: ";
+    short day, month, year;
+    if (!(cin >> day >> month >> year)) {
+        cin.clear();
+        cin.ignore(cin.rdbuf()->in_avail(), '\n');
+        throw exception("Invalid date format. Expected: day month year (e.g., 15 2 2026)");
+    }
+    cin.ignore(cin.rdbuf()->in_avail(), '\n');
+
+    // Validate date ranges
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        throw exception("Invalid date values. day=[1-31], month=[1-12], year=[1900-2100]");
+    }
+
+    try {
+        r.date.setDate(day, month, year);
+    } catch (const exception& e) {
+        throw exception(("Date error: " + string(e.what())).c_str());
+    }
+
+    cout << color(mainColor);
     return r;
 }
 
 string Request::toString() const {
     ostringstream oss;
-    oss << "ID: " << id << ", Пункт назначения: " << destination << ", Рейс: " << flightNum
-        << ", Пассажир: " << passenger << ", Дата: " << date.toString();
+    oss << "ID: " << id << ", пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << destination << ", пїЅпїЅпїЅпїЅ: " << flightNum
+        << ", пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << passenger << ", пїЅпїЅпїЅпїЅ: " << date.toString();
     return oss.str();
 }
 

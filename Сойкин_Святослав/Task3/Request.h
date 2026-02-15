@@ -9,7 +9,8 @@ struct Request : public Object {
     char passenger[31];
     Date date;
 
-    static Request createFactory(int id);  // фабричный метод для создания/инициализации
+    // Manual input with validation (format: first letter upper, rest lower for passenger name)
+    static Request createFromInput(int id);
 
     // Binary (fixed-size) serialization helpers
     void writeBinary(ostream& os) const;
