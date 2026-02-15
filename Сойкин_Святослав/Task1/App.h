@@ -5,8 +5,10 @@ class App {
     vector<float> v_;
     string binFile_;
 
-    // Display vector elements with formatting
-    void displayVector(const string& title, const vector<float>& data, int itemsPerRow = 8);
+    // Display vector elements with formatting. When useColor==true, elements are
+    // colored according to min/max/inside-interval rules (a,b).
+    void displayVector(const string& title, const vector<float>& data, int itemsPerRow = 8,
+                       bool useColor = false, float a = 0.0f, float b = 0.0f, int precision = 3);
 
     // steps of Task 1 implemented as separate functions
     void step_countNegative();

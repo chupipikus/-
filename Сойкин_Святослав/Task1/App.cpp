@@ -43,11 +43,36 @@ void App::loadFromBinary() {
 }
 
 // ����� ���� ��� ����� ��� ������
-void App::displayVector(const string& title, const vector<float>& data, int itemsPerRow) {
+void App::displayVector(const string& title, const vector<float>& data, int itemsPerRow, bool useColor, float a, float b, int precision) {
     cout << "    " << color(resColor) << title << " (n=" << data.size() << ")\n" << color(mainColor);
+    if (data.empty()) {
+        cout << "    (empty)\n";
+        return;
+    }
+
+    // determine min / max for coloring
+    float mn = *min_element(data.begin(), data.end());
+    float mx = *max_element(data.begin(), data.end());
+
     int counter = 0;
     for (size_t i = 0; i < data.size(); ++i) {
-        cout << "    " << left << setw(3) << i << ": " << fixed << setprecision(3) << setw(10) << data[i];
+        float item = data[i];
+        short itemColor = mainColor;
+        if (useColor) {
+            if (eq(item, mn)) {
+                itemColor = sumColor;
+            } else if (eq(item, mx)) {
+                itemColor = acctColor;
+            } else if (a <= item && item <= b) {
+                itemColor = hintColor;
+            } else {
+                itemColor = mainColor;
+            }
+        }
+
+        cout << "    " << color(itemColor) << setw(8) << fixed << setprecision(precision) << item
+             << color(mainColor) << "  ";
+
         if (++counter % itemsPerRow == 0 || i == data.size() - 1) cout << "\n";
     }
 }
@@ -82,15 +107,23 @@ void App::run() {
 
     step_selectNegatives();
     step_selectOutsideInterval(a, b);
+
+    // 7) sorted descending (show colored result)
     step_sortDescending();
+    displayVector("", v_, 8, true, a, b);
+
+    // restore and show 8) sorted by absolute value
     loadFromBinary();
     step_sortByAbsAscending();
+    displayVector("", v_, 8, true, a, b);
+
+    // restore and show 9) move outside interval to end
     loadFromBinary();
     step_moveOutsideIntervalToEnd(a, b);
 
     loadFromBinary();
     cout << "\n    " << color(resColor) << "Vector restored from file (size=" << v_.size() << ")" << color(mainColor) << "\n";
-    displayVector("Original data", v_, 8);
+    displayVector("Original data", v_, 8, true, a, b);
 }
 
 void App::step_countNegative() {
@@ -146,17 +179,15 @@ void App::step_selectOutsideInterval(float a, float b) {
 void App::step_sortDescending() {
     sort(v_.begin(), v_.end(), greater<float>());
     cout << "\n    7) Sorted descending:\n";
-    displayVector("", v_, 8);
 }
 
 void App::step_sortByAbsAscending() {
     sort(v_.begin(), v_.end(), [](float lhs, float rhs){ return fabs(lhs) < fabs(rhs); });
     cout << "\n    8) Sorted by absolute value:\n";
-    displayVector("", v_, 8);
 }
 
 void App::step_moveOutsideIntervalToEnd(float a, float b) {
     stable_partition(v_.begin(), v_.end(), [a,b](float x){ return x >= a && x <= b; });
     cout << "\n    9) Elements outside [a,b] moved to end:\n";
-    displayVector("", v_, 8);
+    displayVector("", v_, 8, true, a, b);
 }
