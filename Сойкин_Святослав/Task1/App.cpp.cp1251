@@ -1,0 +1,45 @@
+#include "App.h"
+#include "Utils.h"
+
+App::App() : binFile_("task1_vector.bin") {
+    int n = getRand(12, 30);
+    v_.assign(n, 0.0f);
+    for (auto &x : v_) x = getRand(-100.0f, 100.0f);
+}
+
+float App::readFloatFromCin(const string &prompt) {
+    cout << prompt;
+    float value;
+    if (!(cin >> value)) throw std::runtime_error("Invalid input");
+    return value;
+}
+
+void App::saveToBinary() const {
+    ofstream out(binFile_, ios::binary | ios::out | ios::trunc);
+    if (!out.is_open()) throw std::runtime_error("Unable to open file for writing");
+
+    size_t n = v_.size();
+    out.write(reinterpret_cast<const char*>(&n), sizeof(n));
+    if (n) out.write(reinterpret_cast<const char*>(v_.data()), n * sizeof(float));
+    if (out.fail()) throw std::runtime_error("Error writing to binary file");
+}
+
+void App::loadFromBinary() {
+    ifstream in(binFile_, ios::binary | ios::in);
+    if (!in.is_open()) throw std::runtime_error("Unable to open binary file for reading");
+
+    size_t n = 0;
+    in.read(reinterpret_cast<char*>(&n), sizeof(n));
+    if (in.fail()) throw std::runtime_error("Error reading vector size");
+
+    vector<float> tmp;
+    if (n) {
+        tmp.resize(n);
+        in.read(reinterpret_cast<char*>(tmp.data()), n * sizeof(float));
+        if (in.fail()) throw std::runtime_error("Error reading vector data");
+    }
+
+    v_.swap(tmp);
+}
+
+// 
