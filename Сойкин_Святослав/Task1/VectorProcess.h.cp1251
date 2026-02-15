@@ -1,0 +1,10 @@
+#pragma once
+class VectorProcess
+{
+	vector<float> data_;
+
+public:
+	VectorProcess();
+	VectorProcess(const vector<float> data);
+
+	// 

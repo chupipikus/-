@@ -29,7 +29,9 @@ int main() try {
 } // try
 catch (exception &ex) {
 	int x = 12, y = 8;
-	cout << color(errColor)
+	cout << color(errColor
+
+	
 		<< pos(x, y) << setw(W) << " "
 		<< pos(x, y + 1) << setw(W) << " "
 		<< pos(x, y + 2) << setw(W) << left << "    [ERROR]"
