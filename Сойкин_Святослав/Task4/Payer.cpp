@@ -19,7 +19,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setName(name);
 
-    cout << "    Enter phone number (format 062-xxx, 121<=xxx<=333): " << color(infoColor);
+    cout << "    Введите номер телефона (формат 062-xxx, 121<=xxx<=333): " << color(infoColor);
     string phone;
     getline(cin, phone);
     cout << color(mainColor);
@@ -36,7 +36,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setPhone(phone);
 
-    cout << "    Enter tariff (cost per minute): " << color(infoColor);
+    cout << "    Введите тариф (стоимость за минуту): " << color(infoColor);
     double tariff;
     if (!(cin >> tariff)) {
         cin.clear();
@@ -51,7 +51,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setTariff(tariff);
 
-    cout << "    Enter discount (0-100%): " << color(infoColor);
+    cout << "    Введите скидку (0-100%): " << color(infoColor);
     int discount;
     if (!(cin >> discount)) {
         cin.clear();
@@ -66,7 +66,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setDiscount(discount);
 
-    cout << "    Enter time in minutes: " << color(infoColor);
+    cout << "    Введите время в минутах: " << color(infoColor);
     int timeMin;
     if (!(cin >> timeMin)) {
         cin.clear();
@@ -81,7 +81,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setTimeMin(timeMin);
 
-    cout << "    Enter date (day month year): " << color(infoColor);
+    cout << "    Введите дату (день месяц год): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();

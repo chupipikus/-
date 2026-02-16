@@ -68,7 +68,7 @@ void App::doAddPayer() {
     showNavBarMessage(hintColor, "    Add new payer");
     printList(payers_.getList(), "Current payers");
 
-    cout << "\n    Enter new payer data:\n";
+    cout << "\n    Введите данные нового абонента:\n";
     try {
         payers_.addPayer();
         cout << color(sumColor) << "    Payer added successfully\n" << color(mainColor);
@@ -92,7 +92,7 @@ void App::doDeleteById() {
         return;
     }
 
-    cout << "\n    Enter payer ID to delete: " << color(infoColor);
+    cout << "\n    Введите ID абонента для удаления: " << color(infoColor);
     int id;
     if (!(cin >> id)) {
         cin.clear();
@@ -127,7 +127,7 @@ void App::doSelectByPhone() {
         return;
     }
 
-    cout << "\n    Enter phone number (format 062-xxx): " << color(infoColor);
+    cout << "\n    Введите номер телефона (формат 062-xxx): " << color(infoColor);
     string phone;
     getline(cin, phone);
     cout << color(mainColor);
@@ -165,7 +165,7 @@ void App::doSelectByName() {
         return;
     }
 
-    cout << "\n    Enter name/initials: " << color(infoColor);
+    cout << "\n    Введите имя и инициалы: " << color(infoColor);
     string name;
     getline(cin, name);
     cout << color(mainColor);
@@ -203,7 +203,7 @@ void App::doSelectByDate() {
         return;
     }
 
-    cout << "\n    Enter date (day month year): " << color(infoColor);
+    cout << "\n    Введите дату (день месяц год): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();
@@ -246,7 +246,7 @@ void App::doSelectBySumRange() {
         return;
     }
 
-    cout << "\n    Enter sum range (low high): " << color(infoColor);
+    cout << "\n    Введите диапазон сумм (нижняя верхняя): " << color(infoColor);
     double low, high;
     if (!(cin >> low >> high)) {
         cin.clear();
@@ -347,7 +347,7 @@ void App::doChangePayer() {
         return;
     }
 
-    cout << "\n    Enter payer ID to modify: " << color(infoColor);
+    cout << "\n    Введите ID абонента для изменения: " << color(infoColor);
     int id;
     if (!(cin >> id)) {
         cin.clear();
