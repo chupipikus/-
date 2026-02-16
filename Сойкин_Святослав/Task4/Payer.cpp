@@ -14,7 +14,7 @@ Payer Payer::createFactory(int id) {
     return p;
 }
 
-// Manual input factory removed per specification: additions use factory methods.\n\n    if (name.length() >= 31) {
+// Ручной ввод удалён: добавления должны использовать фабрику.\n\n    if (name.length() >= 31) {
         throw exception("Name too long (max 30 chars)");
     }
     p.setName(name);
