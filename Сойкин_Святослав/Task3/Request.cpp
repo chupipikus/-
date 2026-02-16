@@ -4,9 +4,9 @@
 Request Request::createFactory(int id) {
     Request r;
     r.id = id;
-    string dest = "ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + to_string(getRand(1, 15));
+    string dest = "????? ?????????? " + to_string(getRand(1, 15));
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-    string pass = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + to_string(getRand(1, 30)) + " ï¿½.ï¿½.";
+    string pass = "?????? " + to_string(getRand(1, 30)) + " ?.?.";
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
@@ -22,7 +22,7 @@ Request Request::createFactory(int id) {
     strncpy(r.destination, dest.c_str(), 30);
     r.destination[30] = '\0';
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ñ€ÐµÐ¹ÑÐ° (Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ PO-xxxxK): " << color(infoColor);
+    cout << "    Ââåäèòå íîìåð ðåéñà (ôîðìàò PO-xxxxK): " << color(infoColor);
     string flight;
     getline(cin, flight);
     cout << color(mainColor);
@@ -35,7 +35,7 @@ Request Request::createFactory(int id) {
     strncpy(r.flightNum, flight.c_str(), 15);
     r.flightNum[15] = '\0';
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ð¿Ð°ÑÑÐ°Ð¶Ð¸Ñ€Ð°: " << color(infoColor);
+    cout << "    Ââåäèòå èìÿ ïàññàæèðà: " << color(infoColor);
     string pass;
     getline(cin, pass);
     cout << color(mainColor);
@@ -48,7 +48,7 @@ Request Request::createFactory(int id) {
     strncpy(r.passenger, pass.c_str(), 30);
     r.passenger[30] = '\0';
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð°Ñ‚Ñƒ (Ð´ÐµÐ½ÑŒ Ð¼ÐµÑÑÑ† Ð³Ð¾Ð´): " << color(infoColor);
+    cout << "    Ââåäèòå äàòó (äåíü ìåñÿö ãîä): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();
@@ -68,8 +68,8 @@ Request Request::createFactory(int id) {
 }
 string Request::toString() const {
     ostringstream oss;
-    oss << "ID: " << id << ", ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << destination << ", ï¿½ï¿½ï¿½ï¿½: " << flightNum
-        << ", ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << passenger << ", ï¿½ï¿½ï¿½ï¿½: " << date.toString();
+    oss << "ID: " << id << ", ????? ??????????: " << destination << ", ????: " << flightNum
+        << ", ????????: " << passenger << ", ????: " << date.toString();
     return oss.str();
 }
 

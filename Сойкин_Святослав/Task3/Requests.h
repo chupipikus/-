@@ -17,7 +17,7 @@ public:
     void sortById();
     void sortByDate();
     void sortByDestination();
-    void changeRequest(int id);  // ���������
+    void changeRequest(int id);  // ?????????
 
     const list<Request>& getList() const { return list_; }
 

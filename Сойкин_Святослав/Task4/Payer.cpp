@@ -14,12 +14,12 @@ Payer Payer::createFactory(int id) {
     return p;
 }
 
-// Ð ÑƒÑ‡Ð½Ð¾Ð¹ Ð²Ð²Ð¾Ð´ ÑƒÐ´Ð°Ð»Ñ‘Ð½: Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð±Ñ€Ð¸ÐºÑƒ.\n\n    if (name.length() >= 31) {
+// Ðó÷íîé ââîä óäàë¸í: äîáàâëåíèÿ äîëæíû èñïîëüçîâàòü ôàáðèêó.\n\n    if (name.length() >= 31) {
         throw exception("Name too long (max 30 chars)");
     }
     p.setName(name);
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ñ‚ÐµÐ»ÐµÑ„Ð¾Ð½Ð° (Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ 062-xxx, 121<=xxx<=333): " << color(infoColor);
+    cout << "    Ââåäèòå íîìåð òåëåôîíà (ôîðìàò 062-xxx, 121<=xxx<=333): " << color(infoColor);
     string phone;
     getline(cin, phone);
     cout << color(mainColor);
@@ -36,7 +36,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setPhone(phone);
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‚Ð°Ñ€Ð¸Ñ„ (ÑÑ‚Ð¾Ð¸Ð¼Ð¾ÑÑ‚ÑŒ Ð·Ð° Ð¼Ð¸Ð½ÑƒÑ‚Ñƒ): " << color(infoColor);
+    cout << "    Ââåäèòå òàðèô (ñòîèìîñòü çà ìèíóòó): " << color(infoColor);
     double tariff;
     if (!(cin >> tariff)) {
         cin.clear();
@@ -51,7 +51,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setTariff(tariff);
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐºÐ¸Ð´ÐºÑƒ (0-100%): " << color(infoColor);
+    cout << "    Ââåäèòå ñêèäêó (0-100%): " << color(infoColor);
     int discount;
     if (!(cin >> discount)) {
         cin.clear();
@@ -66,7 +66,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setDiscount(discount);
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ñ€ÐµÐ¼Ñ Ð² Ð¼Ð¸Ð½ÑƒÑ‚Ð°Ñ…: " << color(infoColor);
+    cout << "    Ââåäèòå âðåìÿ â ìèíóòàõ: " << color(infoColor);
     int timeMin;
     if (!(cin >> timeMin)) {
         cin.clear();
@@ -81,7 +81,7 @@ Payer Payer::createFactory(int id) {
     }
     p.setTimeMin(timeMin);
 
-    cout << "    Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð°Ñ‚Ñƒ (Ð´ÐµÐ½ÑŒ Ð¼ÐµÑÑÑ† Ð³Ð¾Ð´): " << color(infoColor);
+    cout << "    Ââåäèòå äàòó (äåíü ìåñÿö ãîä): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();
@@ -102,8 +102,8 @@ Payer Payer::createFactory(int id) {
 
 string Payer::toString() const {
     ostringstream oss;
-    oss << "ID: " << getId() << ", ï¿½ï¿½ï¿½: " << getName() << ", ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << getPhone()
-        << ", ï¿½ï¿½ï¿½ï¿½ï¿½: " << fixed << setprecision(2) << getTariff() << ", ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << getDiscount()
-        << ", ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " << getTimeMin() << ", ï¿½ï¿½ï¿½ï¿½: " << getDate().toString() << ", ï¿½ï¿½ï¿½ï¿½ï¿½: " << calculateSum();
+    oss << "ID: " << getId() << ", ???: " << getName() << ", ???????: " << getPhone()
+        << ", ?????: " << fixed << setprecision(2) << getTariff() << ", ??????: " << getDiscount()
+        << ", ??????: " << getTimeMin() << ", ????: " << getDate().toString() << ", ?????: " << calculateSum();
     return oss.str();
 }

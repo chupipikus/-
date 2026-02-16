@@ -60,12 +60,12 @@ void Requests::changeRequest(int id) {
             return;
         }
     }
-    throw exception("������ �� �������");
+    throw exception("?????? ?? ???????");
 }
 
 void Requests::saveToBinaryFixed(const string& fname) const {
     ofstream out(fname, ios::binary | ios::trunc);
-    if (!out.is_open()) throw exception(("�� ������� ������� ���� " + fname).c_str());
+    if (!out.is_open()) throw exception(("?? ??????? ??????? ???? " + fname).c_str());
 
     for (const auto& r : list_) {
         r.writeBinary(out);
@@ -74,7 +74,7 @@ void Requests::saveToBinaryFixed(const string& fname) const {
 
 void Requests::loadFromBinaryFixed(const string& fname) {
     ifstream in(fname, ios::binary);
-    if (!in.is_open()) throw exception(("�� ������� ������� ���� " + fname).c_str());
+    if (!in.is_open()) throw exception(("?? ??????? ??????? ???? " + fname).c_str());
 
     list_.clear();
     Request r;
@@ -86,20 +86,20 @@ void Requests::loadFromBinaryFixed(const string& fname) {
 
 void Requests::swapFirstLastInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
-    if (!f.is_open()) throw exception(("�� ������� ������� ���� " + fname).c_str());
+    if (!f.is_open()) throw exception(("?? ??????? ??????? ???? " + fname).c_str());
 
     f.seekg(0, ios::end);
     size_t fileSize = static_cast<size_t>(f.tellg());
     size_t recSize = Request::binarySize();
-    if (fileSize < 2 * recSize) throw exception("������������ ������� � �����");
+    if (fileSize < 2 * recSize) throw exception("???????????? ??????? ? ?????");
 
     f.seekg(0);
     Request first;
-    if (!Request::readBinary(f, first)) throw exception("������ ������ ������ �� �����");
+    if (!Request::readBinary(f, first)) throw exception("?????? ?????? ?????? ?? ?????");
 
     f.seekg(static_cast<streamoff>(fileSize - recSize));
     Request last;
-    if (!Request::readBinary(f, last)) throw exception("������ ������ ������ �� �����");
+    if (!Request::readBinary(f, last)) throw exception("?????? ?????? ?????? ?? ?????");
 
     f.seekp(0);
     last.writeBinary(f);
@@ -110,12 +110,12 @@ void Requests::swapFirstLastInFile(const string& fname) {
 
 void Requests::swapEarliestLatestInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
-    if (!f.is_open()) throw exception(("�� ������� ������� ���� " + fname).c_str());
+    if (!f.is_open()) throw exception(("?? ??????? ??????? ???? " + fname).c_str());
 
     f.seekg(0, ios::end);
     size_t fileSize = static_cast<size_t>(f.tellg());
     size_t recSize = Request::binarySize();
-    if (fileSize < 2 * recSize) throw exception("������������ ������� � �����");
+    if (fileSize < 2 * recSize) throw exception("???????????? ??????? ? ?????");
 
     size_t numRecs = fileSize / recSize;
     Date minDate; minDate.setDate(31, 12, 9999);
@@ -125,20 +125,20 @@ void Requests::swapEarliestLatestInFile(const string& fname) {
     for (size_t pos = 0; pos < numRecs; ++pos) {
         f.seekg(static_cast<streamoff>(pos * recSize));
         Request tmp;
-        if (!Request::readBinary(f, tmp)) throw exception("������ ������ ������ �� �����");
+        if (!Request::readBinary(f, tmp)) throw exception("?????? ?????? ?????? ?? ?????");
         Date d = tmp.getDate();
         if (d < minDate) { minDate = d; minPos = pos; }
         if (maxDate < d) { maxDate = d; maxPos = pos; }
     }
 
-    if (minPos == maxPos) throw exception("��� ���������� ������� ��� swap");
+    if (minPos == maxPos) throw exception("??? ?????????? ??????? ??? swap");
 
     Request minR, maxR;
     f.seekg(static_cast<streamoff>(minPos * recSize));
-    if (!Request::readBinary(f, minR)) throw exception("������ ������ ������ �� �����");
+    if (!Request::readBinary(f, minR)) throw exception("?????? ?????? ?????? ?? ?????");
 
     f.seekg(static_cast<streamoff>(maxPos * recSize));
-    if (!Request::readBinary(f, maxR)) throw exception("������ ������ ������ �� �����");
+    if (!Request::readBinary(f, maxR)) throw exception("?????? ?????? ?????? ?? ?????");
 
     f.seekp(static_cast<streamoff>(minPos * recSize));
     maxR.writeBinary(f);
