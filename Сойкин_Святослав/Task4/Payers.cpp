@@ -19,10 +19,6 @@ void Payers::addPayer() {
     list_.push_back(Payer::createFactory(nextId_++));
 }
 
-void Payers::addPayerFromKeyboard() {
-    list_.push_back(Payer::createFromInput(nextId_++));
-}
-
 void Payers::deleteById(int id) {
     list_.remove_if([id](const Payer& p) { return p.getId() == id; });
 }

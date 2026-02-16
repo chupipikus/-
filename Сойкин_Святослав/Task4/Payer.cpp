@@ -14,18 +14,7 @@ Payer Payer::createFactory(int id) {
     return p;
 }
 
-Payer Payer::createFromInput(int id) {
-    Payer p;
-    p.setId(id);
-
-    cout << "    Enter name and initials: " << color(infoColor);
-    string name;
-    getline(cin, name);
-    cout << color(mainColor);
-    if (cin.fail() || name.empty()) {
-        throw exception("Invalid name input");
-    }
-    if (name.length() >= 31) {
+// Manual input factory removed per specification: additions use factory methods.\n\n    if (name.length() >= 31) {
         throw exception("Name too long (max 30 chars)");
     }
     p.setName(name);

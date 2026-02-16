@@ -70,7 +70,7 @@ void App::doAddPayer() {
 
     cout << "\n    Enter new payer data:\n";
     try {
-        payers_.addPayerFromKeyboard();
+        payers_.addPayer();
         cout << color(sumColor) << "    Payer added successfully\n" << color(mainColor);
     } catch (const exception& e) {
         cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";

@@ -11,7 +11,6 @@ public:
     Payers();
 
     void addPayer();
-    void addPayerFromKeyboard();
     void deleteById(int id);
     list<Payer> selectByPhone(const string& phone) const;
     list<Payer> selectByName(const string& name) const;

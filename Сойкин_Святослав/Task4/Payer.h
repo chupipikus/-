@@ -14,7 +14,6 @@ private:
     Date date_;
 
 public:
-    static Payer createFromInput(int id);
 
     int getId() const { return id_; }
     string getName() const { return name_; }
