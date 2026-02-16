@@ -28,7 +28,7 @@ void App::doAddRequest() {
 
     cout << "\n    Enter new request data:\n";
     try {
-        requests_.addRequestFromKeyboard();
+        requests_.addRequest();
         cout << color(sumColor) << "    Request added successfully\n" << color(mainColor);
     } catch (const exception& e) {
         cout << color(errColor) << "    Error: " << e.what() << color(mainColor) << "\n";

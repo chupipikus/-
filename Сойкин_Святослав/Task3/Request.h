@@ -10,9 +10,8 @@ struct Request : public Object {
     Date date;
 
     static Request createFactory(int id);  
-    static Request createFromKeyboard(int id);  
-
-    void writeBinary(ostream& os) const;
+    // manual creation removed: additions should use factory
+void writeBinary(ostream& os) const;
     static bool readBinary(istream& is, Request& out);
     static size_t binarySize() { return sizeof(int) + 31 + 16 + 31 + 3 * sizeof(short); }
 

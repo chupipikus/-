@@ -10,7 +10,6 @@ public:
     Requests();
 
     void addRequest();
-    void addRequestFromKeyboard();
     void deleteById(int id);
     list<Request> selectByFlight(const string& flight);
     list<Request> selectByDate(const Date& date);

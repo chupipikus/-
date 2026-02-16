@@ -13,10 +13,6 @@ void Requests::addRequest() {
     list_.push_back(Request::createFactory(nextId_++));
 }
 
-void Requests::addRequestFromKeyboard() {
-    list_.push_back(Request::createFromKeyboard(nextId_++));
-}
-
 void Requests::deleteById(int id) {
     list_.remove_if([id](const Request& r) { return r.getId() == id; });
 }

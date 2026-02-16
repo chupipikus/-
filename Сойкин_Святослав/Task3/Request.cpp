@@ -16,17 +16,6 @@ Request Request::createFactory(int id) {
     r.date = d;
     return r;
 }
-Request Request::createFromKeyboard(int id) {
-    Request r;
-    r.id = id;
-
-    cout << "    Enter destination: " << color(infoColor);
-    string dest;
-    getline(cin, dest);
-    cout << color(mainColor);
-    if (cin.fail() || dest.empty()) {
-        throw exception("Invalid destination input");
-    }
     if (dest.length() >= 31) {
         throw exception("Destination too long (max 30 chars)");
     }
