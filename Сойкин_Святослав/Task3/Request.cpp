@@ -22,7 +22,7 @@ Request Request::createFactory(int id) {
     strncpy(r.destination, dest.c_str(), 30);
     r.destination[30] = '\0';
 
-    cout << "    Enter flight number (format PO-xxxxK): " << color(infoColor);
+    cout << "    Введите номер рейса (формат PO-xxxxK): " << color(infoColor);
     string flight;
     getline(cin, flight);
     cout << color(mainColor);
@@ -35,7 +35,7 @@ Request Request::createFactory(int id) {
     strncpy(r.flightNum, flight.c_str(), 15);
     r.flightNum[15] = '\0';
 
-    cout << "    Enter passenger name: " << color(infoColor);
+    cout << "    Введите имя пассажира: " << color(infoColor);
     string pass;
     getline(cin, pass);
     cout << color(mainColor);
@@ -48,7 +48,7 @@ Request Request::createFactory(int id) {
     strncpy(r.passenger, pass.c_str(), 30);
     r.passenger[30] = '\0';
 
-    cout << "    Enter date (day month year): " << color(infoColor);
+    cout << "    Введите дату (день месяц год): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();

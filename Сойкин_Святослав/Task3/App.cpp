@@ -26,7 +26,7 @@ void App::doAddRequest() {
     showNavBarMessage(hintColor, "    Add new flight ticket request");
     printList(getRequests(), "Current requests");
 
-    cout << "\n    Enter new request data:\n";
+    cout << "\n    Введите данные новой заявки:\n";
     try {
         requests_.addRequest();
         cout << color(sumColor) << "    Request added successfully\n" << color(mainColor);
@@ -50,7 +50,7 @@ void App::doDeleteById() {
         return;
     }
 
-    cout << "\n    Enter request ID to delete: " << color(infoColor);
+    cout << "\n    Введите ID заявки для удаления: " << color(infoColor);
     int id;
     if (!(cin >> id)) {
         cin.clear();
@@ -85,7 +85,7 @@ void App::doSelectByFlight() {
         return;
     }
 
-    cout << "\n    Enter flight number (format PO-xxxxK): " << color(infoColor);
+    cout << "\n    Введите номер рейса (формат PO-xxxxK): " << color(infoColor);
     string flight;
     getline(cin, flight);
     cout << color(mainColor);
@@ -123,7 +123,7 @@ void App::doSelectByDate() {
         return;
     }
 
-    cout << "\n    Enter date (day month year): " << color(infoColor);
+    cout << "\n    Введите дату (день месяц год): " << color(infoColor);
     short day, month, year;
     if (!(cin >> day >> month >> year)) {
         cin.clear();
@@ -166,7 +166,7 @@ void App::doSelectByPassenger() {
         return;
     }
 
-    cout << "\n    Enter passenger name: " << color(infoColor);
+    cout << "\n    Введите имя пассажира: " << color(infoColor);
     string pass;
     getline(cin, pass);
     cout << color(mainColor);
@@ -243,7 +243,7 @@ void App::doChangeRequest() {
         return;
     }
 
-    cout << "\n    Enter request ID to modify: " << color(infoColor);
+    cout << "\n    Введите ID заявки для изменения: " << color(infoColor);
     int id;
     if (!(cin >> id)) {
         cin.clear();
@@ -255,7 +255,7 @@ void App::doChangeRequest() {
     cin.ignore(cin.rdbuf()->in_avail(), '\n');
     cout << color(mainColor);
 
-    cout << "\n    Enter new request data:\n";
+    cout << "\n    Введите данные новой заявки:\n";
     try {
         requests_.changeRequest(id);
         cout << color(sumColor) << "    Request ID " << id << " modified\n" << color(mainColor);
